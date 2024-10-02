@@ -95,12 +95,12 @@ void Object3d::UpdateImGui(int id) {
 		ImGui::DragFloat3("Rotate", &transform_.rotate.x, 0.01f);
 		ImGui::DragFloat3("Translate", &transform_.translate.x, 0.01f);
 		ImGui::Separator();
-		ImGui::Text("Material");
 		model_->GetMesh()->GetMaterial()->UpdateMaterialImGui();
 		ImGui::Text("Lighting");
 		ImGui::ColorEdit4("Color", &directionalLightData_->color_.x);
 		ImGui::DragFloat3("Direction", &directionalLightData_->direction_.x, 0.01f);
 		ImGui::DragFloat("Intensity", &directionalLightData_->intensity_, 0.01f);
+		object3dCommon_->Update();
 		ImGui::TreePop();
 	}
 	ImGui::End();

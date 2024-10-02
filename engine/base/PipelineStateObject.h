@@ -59,6 +59,10 @@ public:
 	/// </summary>
 	void CreatePSO(ID3D12Device* device, DXC* dxc_, D3D12_CULL_MODE cullMode);
 
+	void UpdateImGui();
+	
+	bool UpdateImguiCombo();
+
 public:
 
 	///////////////////////////////////////////////////////////////////////////////////////////
@@ -76,10 +80,18 @@ public:
 	/// </summary>
 	ID3D12PipelineState* GetGraphicPipelineState() const { return graphicPipelineState_.Get(); }
 
-	///////////////////////////////////////////////////////////////////////////////////////////
-	///			setter
-	///////////////////////////////////////////////////////////////////////////////////////////
+public:
 
+	enum BlendMode {
+
+		kBlendModeNone,     //ブレンドなし
+		kBlendModeNormal,   //通常
+		kBlendModeAdd,      //加算
+		kBlendModeSubtract, //減算
+		kBlendModeMultiply, //乗算
+		kBlendModeScreen,   //スクリーン
+		kCountBlendMode,    //ブレンドモードの数
+	};
 
 private:
 
@@ -109,6 +121,8 @@ private:
 	ComPtr<ID3D12PipelineState> graphicPipelineState_;
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDesc_{};
 
+	//BlendMode
+	BlendMode blendMode_ = kBlendModeNone;
 
 };
 

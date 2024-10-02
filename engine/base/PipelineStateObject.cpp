@@ -4,7 +4,13 @@
 #include "DirectXShaderCompiler.h"
 #include <cassert>
 
-#pragma region PSO
+#pragma region imgui
+#ifdef _DEBUG
+#include "externals/imgui/imgui.h"
+#include "externals/imgui/imgui_impl_dx12.h"
+#include "externals/imgui/imgui_impl_win32.h"
+#endif 
+#pragma endregion
 
 PSO::~PSO() {
 
@@ -197,4 +203,69 @@ void PSO::CreatePSO(ID3D12Device* device, DXC* dxc_, D3D12_CULL_MODE cullMode) {
 	assert(SUCCEEDED(result));
 }
 
-#pragma endregion
+void PSO::UpdateImGui() {
+
+	ImGui::Text("BlendState");
+	UpdateImguiCombo();
+
+}
+
+bool PSO::UpdateImguiCombo() {
+
+	std::vector<std::string> items = { "Add", "Subtract","Multiply","Screen"};
+	uint32_t itemCurrentIdx = 0;
+	std::string& currentItem = items[itemCurrentIdx];
+	bool changed = false;
+
+	if (ImGui::BeginCombo("Lighting", currentItem.c_str())) {
+		for (int n = 0; n < items.size(); n++) {
+			const bool is_selected = (currentItem == items[n]);
+			if (ImGui::Selectable(items[n].c_str(), is_selected)) {
+				itemCurrentIdx = n;
+
+				
+				changed = true;
+			}
+			// Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
+			if (is_selected) {
+
+				ImGui::SetItemDefaultFocus();
+			}
+
+		}
+
+		currentItem = items[itemCurrentIdx];
+		ImGui::EndCombo();
+	}
+
+	if (changed) {
+		switch (itemCurrentIdx) {
+		case 0: // Add
+			blendDesc_.RenderTarget[0].SrcBlend = D3D12_BLEND_SRC_ALPHA;
+			blendDesc_.RenderTarget[0].BlendOp = D3D12_BLEND_OP_ADD;
+			blendDesc_.RenderTarget[0].DestBlend = D3D12_BLEND_ONE;	
+			break;
+
+		case 1: // Subtract
+			blendDesc_.RenderTarget[0].SrcBlend = D3D12_BLEND_SRC_ALPHA;
+			blendDesc_.RenderTarget[0].BlendOp = D3D12_BLEND_OP_SUBTRACT;
+			blendDesc_.RenderTarget[0].DestBlend = D3D12_BLEND_ONE;
+			
+			break;
+
+		case 2: // Multiply
+			blendDesc_.RenderTarget[0].SrcBlend = D3D12_BLEND_ZERO;
+			blendDesc_.RenderTarget[0].BlendOp = D3D12_BLEND_OP_ADD;
+			blendDesc_.RenderTarget[0].DestBlend = D3D12_BLEND_SRC_COLOR;
+			break;
+
+		case 3: // Screen
+			blendDesc_.RenderTarget[0].SrcBlend = D3D12_BLEND_INV_DEST_COLOR;
+			blendDesc_.RenderTarget[0].BlendOp = D3D12_BLEND_OP_ADD;
+			blendDesc_.RenderTarget[0].DestBlend = D3D12_BLEND_ONE;
+			break;
+		}
+	}
+
+	return changed;
+}
