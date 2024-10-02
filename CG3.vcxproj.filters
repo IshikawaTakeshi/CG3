@@ -102,7 +102,7 @@
     <ClCompile Include="engine\base\DirectXShaderCompiler.cpp">
       <Filter>ソース ファイル\engine\base</Filter>
     </ClCompile>
-    <ClCompile Include="engine\2d\Material.cpp">
+    <ClCompile Include="engine\3d\Material.cpp">
       <Filter>ソース ファイル\engine\3d</Filter>
     </ClCompile>
     <ClCompile Include="engine\base\PipelineStateObject.cpp">
