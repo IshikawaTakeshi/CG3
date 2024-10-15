@@ -121,6 +121,8 @@ public:
 	/// <returns></returns>
 	DXC* GetDXC() { return dxc_; }
 
+	PSO* GetPSO() { return pso_; }
+
 	uint32_t GetDescriptorSizeSRV() { return descriptorSizeSRV_; }
 	uint32_t GetDescriptorSizeRTV() { return descriptorSizeRTV_; }
 	uint32_t GetDescriptorSizeDSV() { return descriptorSizeDSV_; }

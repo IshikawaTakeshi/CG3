@@ -3,6 +3,7 @@
 #include <d3d12.h>
 #include <dxcapi.h>
 #include <wrl.h>
+#include <cstdint>
 
 class DXC;
 class PSO {
@@ -122,7 +123,9 @@ private:
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDesc_{};
 
 	//BlendMode
+	uint32_t itemCurrentIdx = 0;
 	BlendMode blendMode_ = kBlendModeNone;
 
+	ID3D12Device* device_ = nullptr;
 };
 
