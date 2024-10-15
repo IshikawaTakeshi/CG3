@@ -109,15 +109,8 @@ void DirectXCommon::Finalize() {
 		dxc_ = nullptr;
 	}
 
-	if (pso_ != nullptr) {
-		//pso_->Finalize();
-		delete pso_;
-		pso_ = nullptr;
-	}
 
 	winApp_ = nullptr;
-
-
 }
 
 void DirectXCommon::PreDraw() {

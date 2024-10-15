@@ -107,14 +107,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//Model読み込み
 	ModelManager::GetInstance()->LoadModel("axis.obj");
 	ModelManager::GetInstance()->LoadModel("plane.obj");
+	ModelManager::GetInstance()->LoadModel("fence.obj");
 
 
 	//3dObject
 	std::shared_ptr<Object3d> object3d = std::make_shared<Object3d>();
-	object3d->Initialize(object3dCommon,"axis.obj");
+	object3d->Initialize(object3dCommon,"fence.obj");
 	object3d->SetScale({0.5f,0.5f,0.5f});
 	std::shared_ptr<Object3d> object3d1 = std::make_shared<Object3d>();
-	object3d1->Initialize(object3dCommon,"plane.obj");
+	object3d1->Initialize(object3dCommon,"fence.obj");
 	object3d1->SetScale({ 0.5f,0.5f,0.5f });
 	
 
